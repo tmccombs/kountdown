@@ -1,0 +1,21 @@
+[Desktop Entry]
+Comment=
+Encoding=UTF-8
+Icon=chronometer
+Keywords=
+Name=Kountdown
+Type=Service
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=Thayne McCombs
+X-KDE-PluginInfo-Category=Date and Time
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-Email=astrothayne@gmail.com
+X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-Name=kountdown
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://plasma.kde.org/
+X-KDE-ServiceTypes=Plasma/Applet
+X-Plasma-API=python
+X-Plasma-MainScript=code/main.py
+X-Plasma-RemoteLocation=
