@@ -27,26 +27,24 @@ class Kountdown(plasmascript.Applet):
 
 
     def setupMainUI(self):
-        self.setAspectRatioMode(Plasma.Square)
+        self.setAspectRatioMode(Plasma.IgnoreAspectRatio)
 
-        self.theme = Plasma.Svg(self)
-        self.theme.setImagePath("widgets/background")
-        self.setBackgroundHints(Plasma.Applet.DefaultBackground)
+        self.setBackgroundHints(Plasma.Applet.TranslucentBackground)
 
-        self.layout = QGraphicsLinearLayout(Qt.Horizontal,self.applet)
+        self.layout = QGraphicsLinearLayout(Qt.Vertical,self.applet)
         self.label = Plasma.Label(self.applet)
         self.label.setText(self.model.message)
+        self.label.setStyleSheet('''font-size: 18pt;''')
+        self.label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         self.layout.addItem(self.label)
         self.applet.setLayout(self.layout)
-        self.resize(125,125)
+
+        self.resize(300,125)
 
     def createConfigurationInterface(self, parent):
         '''Create the configuration UI'''
         plasmascript.Applet.createConfigurationInterface(self,parent)
-        print 'before'
-        print parent
         parent.addPage( ConfigPage(parent, self.model), 'Config')
-        print 'after'
 
 
     def connectToEngine(self):
