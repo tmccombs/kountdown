@@ -9,7 +9,7 @@ PYSRCS = $(CODEDIR)/main.py $(CODEDIR)/model.py $(CODEDIR)/configUI.py
 package: kountdown.zip
 
 kountdown.zip: $(PYSRCS)
-	cd $(SRCDIR) && zip -r --filesync ../kountdown.zip .
+	cd $(SRCDIR) && zip -r --filesync  --exclude \*.swp ../kountdown.zip .
 
 .PHONY: clean
 clean:
