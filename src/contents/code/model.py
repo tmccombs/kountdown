@@ -14,13 +14,14 @@ class KountdownModel(QObject):
     milliInHour = 3600000
 
     messageChanged = pyqtSignal('QString')
+    configChanged = pyqtSignal()
 
     def __init__(self,config):
         QObject.__init__(self)
         self.config = config
         #TODO: figure out how to get rid of all this toDate, toPyDate stuff
-        self._targetDate = config.readEntry('Target',QDate(2014,3,1)).toDate().toPyDate()
-        self._event = str(config.readEntry('Event','the wedding').toString())
+        self._targetDate = config.readEntry('Target',QDate()).toDate().toPyDate()
+        self._event = str(config.readEntry('Event',QString()).toString())
         self._today = date.today()
 
     @property
@@ -38,6 +39,7 @@ class KountdownModel(QObject):
         '''set the target date for the countdown'''
         self._targetDate = value
         self.config.writeEntry('Target',QDate(value))
+        self.configChanged.emit()
         self.messageChanged.emit(self.message)
 
     @property
@@ -50,6 +52,7 @@ class KountdownModel(QObject):
         '''set the name of the event counting down to'''
         self._event = value
         self.config.writeEntry('Event',value)
+        self.configChanged.emit()
         self.messageChanged.emit(self.message)
 
     @property

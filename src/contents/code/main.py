@@ -16,17 +16,23 @@ class Kountdown(plasmascript.Applet):
 
  
     def init(self):
-        self.model = KountdownModel(self.config())
-        print 'in init'
         self.setHasConfigurationInterface(True)
 
-        self.setupMainUI()
+        config = self.config()
 
-        self.connectToEngine()
-        self.model.messageChanged.connect(self.handleMessageChanged)
+        self.model = KountdownModel(config)
+        self.model.configChanged.connect(self.updatedConfig)
+        if config.hasKey('Target') and config.hasKey('Event'):
+            self.setupMainUI()
+            'has both'
+        else:
+            self.setConfigurationRequired(True)
+        self.resize(300,125)
+
 
 
     def setupMainUI(self):
+        print 'setup'
         self.setAspectRatioMode(Plasma.IgnoreAspectRatio)
 
         self.setBackgroundHints(Plasma.Applet.TranslucentBackground)
@@ -39,12 +45,23 @@ class Kountdown(plasmascript.Applet):
         self.layout.addItem(self.label)
         self.applet.setLayout(self.layout)
 
-        self.resize(300,125)
+
+        self.connectToEngine()
+        self.model.messageChanged.connect(self.handleMessageChanged)
 
     def createConfigurationInterface(self, parent):
         '''Create the configuration UI'''
         plasmascript.Applet.createConfigurationInterface(self,parent)
         parent.addPage( ConfigPage(parent, self.model), 'Config')
+
+    def updatedConfig(self):
+        config = self.config()
+        print 'updated'
+        if self.configurationRequired() and config.hasKey('Target') and config.hasKey('Event'):
+            self.setConfigurationRequired(False)
+            self.setupMainUI()
+        self.configNeedsSaving.emit()
+        
 
 
     def connectToEngine(self):
