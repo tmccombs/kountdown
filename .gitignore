@@ -34,3 +34,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+#Swp files
+*.swp
+
+#Project specific:
+kountdown.zip
