@@ -2,14 +2,17 @@
 SRCDIR = src
 METADATA = $(SRCDIR)/metadata.desktop
 
+CONTENTDIR=$(SRCDIR)/contents
 CODEDIR = $(SRCDIR)/contents/code
-PYSRCS = $(CODEDIR)/main.py $(CODEDIR)/model.py $(CODEDIR)/configUI.py
+SRCS = $(CODEDIR)/main.py $(CODEDIR)/model.py $(CONTENTDIR)/config/main.xml $(CONTENTDIR)/ui/config.ui
+ZIP_SRCS = $(subst $(SRCDIR)/,,$(SRCS)) metadata.desktop
+
 
 .PHONY: package
 package: kountdown.zip
 
-kountdown.zip: $(PYSRCS)
-	cd $(SRCDIR) && zip -r --filesync  --exclude \*.swp ../kountdown.zip .
+kountdown.zip: $(SRCS) $(METADATA)
+	cd $(SRCDIR) && zip -r --filesync ../kountdown.zip $(ZIP_SRCS)
 
 .PHONY: clean
 clean:
@@ -20,5 +23,7 @@ clean:
 install: package
 	plasmapkg -i kountdown.zip
 
+.PHONY: uninstall
+	plasmapkg -r kountdown
 
 
