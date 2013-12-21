@@ -16,49 +16,37 @@ class KountdownModel(QObject):
     messageChanged = pyqtSignal('QString')
     configChanged = pyqtSignal()
 
-    def __init__(self,config):
+    def __init__(self,configLoader):
+        '''Create a Kountdown model backed by the supplied ConfigLoader'''
         QObject.__init__(self)
-        self.config = config
-        #TODO: figure out how to get rid of all this toDate, toPyDate stuff
-        self._targetDate = config.readEntry('Target',QDate()).toDate().toPyDate()
-        self._event = str(config.readEntry('Event',QString()).toString())
+        self.config = configLoader
         self._today = date.today()
+        self.config.configChanged.connect(self.configChanged)
+
+
+    @property
+    def needsConfiguration(self):
+        return False
 
     @property
     def message(self):
         '''get the message to display to the user'''
-        return self.messageTemplate.format(self.daysRemaining, self._event)
+        return self.messageTemplate.format(self.daysRemaining, self.event)
 
     @property
     def targetDate(self):
         '''get the target date for the countdown'''
-        return self._targetDate
-
-    @targetDate.setter
-    def targetDate(self, value):
-        '''set the target date for the countdown'''
-        self._targetDate = value
-        self.config.writeEntry('Target',QDate(value))
-        self.configChanged.emit()
-        self.messageChanged.emit(self.message)
+        return self.config.property('target').toDate().toPyDate()
 
     @property
     def event(self):
         '''Get the name of the event counting down to'''
-        return self._event
-
-    @event.setter
-    def event(self, value):
-        '''set the name of the event counting down to'''
-        self._event = value
-        self.config.writeEntry('Event',value)
-        self.configChanged.emit()
-        self.messageChanged.emit(self.message)
+        return self.config.property('event').toPyObject()
 
     @property
     def daysRemaining(self):
         '''get the number of days remaining.'''
-        return (self._targetDate - self._today).days
+        return (self.targetDate - self._today).days
 
     def setCurrentDate(self, current):
         '''set the current date'''
@@ -77,5 +65,9 @@ class KountdownModel(QObject):
         '''Connect this model to a Data Engine (specifically
          a time data engine).'''
         engine.connectSource("Local",self,self.milliInHour,Plasma.AlignToHour)
+
+    def configChanged(self):
+        '''Handle a configuration change.'''
+        self.messageChanged.emit(self.message)
         
 

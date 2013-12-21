@@ -8,7 +8,6 @@ from PyKDE4 import plasmascript
 from datetime import date
 
 from model import KountdownModel
-from configUI import ConfigPage
 
 class Kountdown(plasmascript.Applet):
     def __init__(self,parent,args=None):
@@ -18,15 +17,11 @@ class Kountdown(plasmascript.Applet):
     def init(self):
         self.setHasConfigurationInterface(True)
 
-        config = self.config()
-
-        self.model = KountdownModel(config)
-        self.model.configChanged.connect(self.updatedConfig)
-        if config.hasKey('Target') and config.hasKey('Event'):
-            self.setupMainUI()
-            'has both'
-        else:
+        self.model = KountdownModel(self.configScheme())
+        if self.model.needsConfiguration:
             self.setConfigurationRequired(True)
+        else:
+            self.setupMainUI()
         self.resize(300,125)
 
 
@@ -49,18 +44,16 @@ class Kountdown(plasmascript.Applet):
         self.connectToEngine()
         self.model.messageChanged.connect(self.handleMessageChanged)
 
-    def createConfigurationInterface(self, parent):
-        '''Create the configuration UI'''
-        plasmascript.Applet.createConfigurationInterface(self,parent)
-        parent.addPage( ConfigPage(parent, self.model), 'Config')
+    def configChanged(self):
+        '''handle changes in configuration'''
+        plasmascript.Applet.configChanged(self)
+        self.updatedConfig()
 
     def updatedConfig(self):
         config = self.config()
-        print 'updated'
-        if self.configurationRequired() and config.hasKey('Target') and config.hasKey('Event'):
+        if self.configurationRequired() and not self.model.needsConfiguration:
             self.setConfigurationRequired(False)
             self.setupMainUI()
-        self.configNeedsSaving.emit()
         
 
 

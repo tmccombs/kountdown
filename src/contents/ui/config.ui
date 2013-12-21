@@ -2,17 +2,6 @@
 <ui version="4.0">
  <class>ConfigForm</class>
  <widget class="QWidget" name="ConfigForm">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>292</width>
-    <height>79</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="dateLabel">
@@ -22,7 +11,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="KDateComboBox" name="dateInput"/>
+    <widget class="KDateComboBox" name="kcfg_target"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="nameLabel">
@@ -32,7 +21,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="KLineEdit" name="nameInput"/>
+    <widget class="KLineEdit" name="kcfg_event"/>
    </item>
   </layout>
  </widget>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+    <kcfgfile name="kountdownrc" />
+    <group name="main">
+        <entry name="event" type="String">
+            <label>Event Name</label>
+            <tooltip>The name of the event</tooltip>
+            <whatsthis>The name of the event you are counting down to</whatsthis>
+        </entry>
+        <entry name="target" type="DateTime">
+            <label>Event Date</label>
+            <tooltip>The date that your event occurs on</tooltip>
+            <whatsthis>The date that your event occurs on</whatsthis>
+        </entry>
+    </group>
+</kcfg>
