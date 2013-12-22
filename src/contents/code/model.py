@@ -4,8 +4,6 @@
 from PyQt4.QtCore import *
 from PyKDE4.plasma import Plasma
 
-from datetime import date
-
 class KountdownModel(QObject):
     '''Model object to keep track of the state of a Kountdown instance
     and take care of reading and writing configuration values.'''
@@ -20,13 +18,13 @@ class KountdownModel(QObject):
         '''Create a Kountdown model backed by the supplied ConfigLoader'''
         QObject.__init__(self)
         self.config = configLoader
-        self._today = date.today()
+        self._today = QDate.currentDate()
         self.config.configChanged.connect(self.configChanged)
 
 
     @property
     def needsConfiguration(self):
-        return False
+        return self.targetDate == QDate() or self.event == ''
 
     @property
     def message(self):
@@ -36,17 +34,17 @@ class KountdownModel(QObject):
     @property
     def targetDate(self):
         '''get the target date for the countdown'''
-        return self.config.property('target').toDate().toPyDate()
+        return self.config.property('target').toDate()
 
     @property
     def event(self):
         '''Get the name of the event counting down to'''
-        return self.config.property('event').toPyObject()
+        return self.config.property('event').toString()
 
     @property
     def daysRemaining(self):
         '''get the number of days remaining.'''
-        return (self.targetDate - self._today).days
+        return self.targetDate.daysTo(self._today)
 
     def setCurrentDate(self, current):
         '''set the current date'''
@@ -58,7 +56,7 @@ class KountdownModel(QObject):
     def dataUpdated(self, sourceName, data):
         '''retrieve the current date from a dataengine.
         The Data must contain a Date key of type QDate.'''
-        today = data[QString("Date")].toPyDate()
+        today = data[QString("Date")]
         self.setCurrentDate(today)
 
     def connectToEngine(self, engine):
