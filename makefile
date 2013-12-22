@@ -9,19 +9,19 @@ ZIP_SRCS = $(subst $(SRCDIR)/,,$(SRCS)) metadata.desktop
 
 
 .PHONY: package
-package: kountdown.zip
+package: kountdown.plasmoid
 
-kountdown.zip: $(SRCS) $(METADATA)
-	cd $(SRCDIR) && zip -r --filesync ../kountdown.zip $(ZIP_SRCS)
+kountdown.plasmoid: $(SRCS) $(METADATA)
+	cd $(SRCDIR) && zip -r --filesync ../kountdown.plasmoid $(ZIP_SRCS)
 
 .PHONY: clean
 clean:
-	rm kountdown.zip
+	rm kountdown.plasmoid
 
 
 .PHONY: install
 install: package
-	plasmapkg -i kountdown.zip
+	plasmapkg -i kountdown.plasmoid
 
 .PHONY: uninstall
 	plasmapkg -r kountdown
