@@ -25,27 +25,17 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="KFontComboBox" name="kcfg_font"/>
+    <widget class="KFontRequester" name="kcfg_font"/>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Font Color</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="KColorCombo" name="kcfg_color"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Font Size</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="1">
-    <widget class="KIntSpinBox" name="Kcfg_fontSize"/>
+    <widget class="KColorCombo" name="kcfg_color"/>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_4">
@@ -75,19 +65,9 @@
    <header>kcolorcombo.h</header>
   </customwidget>
   <customwidget>
-   <class>KFontComboBox</class>
-   <extends>KComboBox</extends>
-   <header>kfontcombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
+   <class>KFontRequester</class>
+   <extends>QWidget</extends>
+   <header>kfontrequester.h</header>
   </customwidget>
   <customwidget>
    <class>KUrlRequester</class>
