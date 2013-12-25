@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2013 Thayne McCombs
 from PyQt4.QtCore import *
-from PyQt4.QtGui import QGraphicsLinearLayout
+from PyQt4.QtGui import QGraphicsLinearLayout,QWidget
+from PyQt4 import uic
 from PyKDE4.plasma import Plasma
 from PyKDE4 import plasmascript
 
@@ -44,9 +45,26 @@ class Kountdown(plasmascript.Applet):
         self.connectToEngine()
         self.model.messageChanged.connect(self.handleMessageChanged)
 
+    def createConfigurationInterface(self,parent):
+        plasmascript.Applet.createConfigurationInterface(self,parent)
+
+        # add the general configuration tab
+        generalWidget = QWidget(parent)
+        uic.loadUi(self.package().filePath('ui','generalConfig.ui'),generalWidget)
+        parent.addPage(generalWidget, self.configScheme(), 'Settings')
+
+
+        # add the appearance configuration tab
+        appearanceWidget = QWidget(parent)
+        uic.loadUi(self.package().filePath('ui','appearanceConfig.ui'),appearanceWidget)
+        parent.addPage(appearanceWidget, self.configScheme(), 'Appearance')
+
+
     def configChanged(self):
         '''handle changes in configuration'''
         plasmascript.Applet.configChanged(self)
+        for item in self.configScheme().items():
+            print('{0}: {1} in group: {2}'.format(item.name(), item.property().toPyObject(),item.group()))
         self.updatedConfig()
 
     def updatedConfig(self):
@@ -54,8 +72,6 @@ class Kountdown(plasmascript.Applet):
         if self.configurationRequired() and not self.model.needsConfiguration:
             self.setConfigurationRequired(False)
             self.setupMainUI()
-        
-
 
     def connectToEngine(self):
         self.timeEngine = self.dataEngine("time")
