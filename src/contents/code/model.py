@@ -44,7 +44,7 @@ class KountdownModel(QObject):
     @property
     def daysRemaining(self):
         '''get the number of days remaining.'''
-        return self.targetDate.daysTo(self._today)
+        return self._today.daysTo(self.targetDate)
 
     def setCurrentDate(self, current):
         '''set the current date'''
