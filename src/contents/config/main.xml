@@ -15,18 +15,17 @@
             <whatsthis>The date that your event occurs on</whatsthis>
         </entry>
     </group>
-    <group name="Appearence">
+    <group name="Appearance">
         <entry name="image" type="Url">
             <label>Image</label>
         </entry>
         <entry name="font" type="Font">
             <label>Font</label>
+            <default>Serif</default>
         </entry>
         <entry name="color" type="Color">
             <label>Color</label>
-        </entry>
-        <entry name="fontSize" type="UInt">
-            <label>Font Size</label>
+            <default>#000000</default>
         </entry>
     </group>
 </kcfg>
