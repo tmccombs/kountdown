@@ -59,13 +59,13 @@ class Kountdown(plasmascript.Applet):
         # add the general configuration tab
         generalWidget = QWidget(parent)
         uic.loadUi(self.package().filePath('ui','generalConfig.ui'),generalWidget)
-        parent.addPage(generalWidget, self.appearance.config, 'Settings')
+        parent.addPage(generalWidget, self.appearance.config, 'Settings','chronometer')
 
 
         # add the appearance configuration tab
         appearanceWidget = QWidget(parent)
         uic.loadUi(self.package().filePath('ui','appearanceConfig.ui'),appearanceWidget)
-        parent.addPage(appearanceWidget, self.model.config, 'Appearance')
+        parent.addPage(appearanceWidget, self.model.config, 'Appearance','applications-graphics')
 
 
     def configChanged(self):
